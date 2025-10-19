@@ -1,4 +1,3 @@
-// src/resolvers/HelloResolver.ts
 import { Query, Resolver } from "type-graphql";
 
 @Resolver()
