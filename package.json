@@ -3,6 +3,7 @@
     "@apollo/server": "^5.0.0",
     "@as-integrations/express5": "^1.1.2",
     "@prisma/client": "^6.17.1",
+    "apollo-server-errors": "^3.3.1",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "class-validator": "^0.14.2",
@@ -29,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",

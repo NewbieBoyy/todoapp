@@ -4,9 +4,11 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@as-integrations/express5"; // Updated import
+import { expressMiddleware } from "@as-integrations/express5";
 import { buildSchema } from "type-graphql";
+
 import { HelloResolver } from "./resolvers/HelloResolver";
+import { UserResolver } from "./resolvers/UserResolver"; // ✅ Add UserResolver
 
 async function startServer() {
   const app = express();
@@ -17,13 +19,23 @@ async function startServer() {
   app.use(express.json());
   app.use(rateLimit({ windowMs: 60 * 1000, max: 100 }));
 
-  // Build GraphQL schema
+  // Build GraphQL schema with all resolvers
   const schema = await buildSchema({
-    resolvers: [HelloResolver],
+    resolvers: [
+      HelloResolver,
+      UserResolver, // ✅ Include here so mutations like register are recognized
+    ],
     validate: false,
   });
+   
+const server = new ApolloServer({
+  schema,
+  formatError: (err) => {
+    // Only return the message for client errors
+    return { message: err.message };
+  },
+});
 
-  const server = new ApolloServer({ schema });
   await server.start();
 
   // Express integration
