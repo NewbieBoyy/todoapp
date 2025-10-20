@@ -30,3 +30,12 @@ export class RegisterInput {
   @Field()
   confirmPassword!: string; // Only for validation, not stored in DB
 }
+
+@InputType()
+export class LoginInput {
+  @Field()
+  email!: string;
+
+  @Field()
+  password!: string;
+}
