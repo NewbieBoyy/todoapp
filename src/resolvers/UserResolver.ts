@@ -19,6 +19,19 @@ export class UserResolver {
       throw new UserInputError("Passwords do not match!");
     }
 
+    if (!email || !password || !confirmPassword) {
+      throw new UserInputError("All fields are required!");
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new UserInputError("Invalid email format!");
+    }
+
+    if (password.length < 8) {
+      throw new UserInputError("Password must be at least 8 characters long!");
+    }
+
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       throw new UserInputError("Email is already in use!");
@@ -31,7 +44,7 @@ export class UserResolver {
         email,
         password: hashedPassword,
       },
-    });
+    });   
 
     return "User registered successfully!";
   }
