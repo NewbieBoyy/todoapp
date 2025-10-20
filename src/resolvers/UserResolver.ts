@@ -19,10 +19,6 @@ export class UserResolver {
       throw new UserInputError("Passwords do not match!");
     }
 
-    if (!email || !password || !confirmPassword) {
-      throw new UserInputError("All fields are required!");
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       throw new UserInputError("Invalid email format!");
